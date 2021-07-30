@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const jobsSchema = new mongoose.Schema({
   title: { type: String, default: null },
   subtitle: { type: String, default: null },
+  slug: { type: String, default: null },
   type: { type: String, default: null },
   description: { type: String, default: null },
   company_name: { type: String, default: null },

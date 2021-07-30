@@ -1,7 +1,10 @@
 const Jobs = require("../models/jobs.model");
+const slugify = require('slugify')
+
 const fields = [
   "title",
   "subtitle",
+  "slug",
   "type",
   "description",
   "company_name",
@@ -39,6 +42,10 @@ exports.createJob = async (req, res) => {
       apply_url,
     } = req.body;
 
+    let randomNumber = Math.floor((Math.random() * 100) * 15);
+    const slug = slugify(`${title} at ${company_name} ${randomNumber}`)
+    console.log(slug)
+
     fields.forEach((item) => {
       if (!req.body[item]) {
         req.body[item] = " ";
@@ -48,6 +55,7 @@ exports.createJob = async (req, res) => {
     const job = await Jobs.create({
       title,
       subtitle,
+      slug,
       type,
       description,
       company_name,
@@ -75,6 +83,7 @@ exports.editJob = async (req, res) => {
     id,
     title,
     subtitle,
+    slug,
     type,
     description,
     company_name,

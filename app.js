@@ -17,7 +17,7 @@ app.get('/', auth, (req, res) => {
 })
 
 app.use('/', authRoutes);
-app.use('/jobs', auth, jobsRoutes);
+app.use('/jobs', jobsRoutes);
 
 const server = app.listen(process.env.PORT, () => {
   console.log(`Example app listening at http://localhost:${process.env.PORT}`);
