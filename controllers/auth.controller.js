@@ -9,10 +9,14 @@ exports.generateAccessToken = function (user_id) {
 
 exports.register = async function( req, res) {
   try {
-    const { first_name, last_name, email, password } = req.body;
+    const { first_name, last_name, email, password, user_type, company_name } = req.body;
 
-    if(!( first_name && last_name && email && password )) {
+    if(!( first_name && last_name && email && password && user_type)) {
       res.status(400).send("All input fields are required");
+    }
+
+    if(user_type == 'employer') {
+      res.status(400).send("Company name is required")
     }
 
     const existingUser = await User.findOne({ email });
@@ -26,6 +30,8 @@ exports.register = async function( req, res) {
     const user = await User.create({
       first_name,
       last_name,
+      user_type,
+      company_name,
       email: email.toLowerCase(),
       password: encryptedPassword
     });
@@ -44,7 +50,7 @@ exports.register = async function( req, res) {
 exports.login = async function(req, res) {
   try{
     const { email, password } = req.body;
-
+    console.log(req.body)
     if(!(email && password)) {
       res.status(400).send("Please provide email and password");
     }
